@@ -1,0 +1,41 @@
+version: 0.0
+os: linux
+hooks:
+  BeforeInstall:
+  - location: scripts/pre-install.sh
+    timeout: 300
+    runas: ec2-user
+files:
+  - source:  /
+    destination: /www
+    overwrite: yes
+
+permissions:
+  - object: /www
+    pattern: "**"
+    owner: ec2-user
+    group: ec2-user
+
+# 스크립트 돌릴 때 Root 권한으로 아래와 같이 할 수 있다.
+#hooks:
+  #사전에 설치해야 할 쉘 스크립트를 돌린다.
+#  BeforeInstall:
+#    - location: scripts/install_dependencies.sh
+#      timeout: 300
+#      runas: root
+  #배포 후 설치해야 할 쉘 스크립트를 돌린다.
+#  AfterInstall:
+#    - location: scripts/change_permissions.sh
+#      timeout: 300
+#      runas: root
+  #서비스를 시작시키는 쉘 스크립트
+#  ApplicationStart:
+#    - location: scripts/start_server.sh
+#    - location: scripts/create_test_db.sh
+#      timeout: 300
+#      runas: root
+  #서비스를 중지 시키는 쉘 스크립트
+#  ApplicationStop:
+#    - location: scripts/stop_server.sh
+#      timeout: 300
+#      runas: root
